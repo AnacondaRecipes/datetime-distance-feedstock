@@ -11,17 +11,19 @@ source:
   sha256: 7177a54a3555d4737626786f70a062e509f7c0014ba63fc26cd28263b8c64d68
 
 build:
+  skip: True  # [py<36]
   number: 0
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
     - pip
-    - python >=3.6
+    - python
+    - setuptools
+    - wheel
   run:
     - future
-    - python >=3.6
+    - python
     - python-dateutil >=2.6.0
 
 test:
@@ -35,8 +37,14 @@ test:
 about:
   home: https://github.com/dedupeio/datetime-distance
   summary: Compare string distances between dates, timestamps, or datetime objects.
+  description: |
+    Python library to compare string distances between dates,
+    timestamps, or datetime objects.
   license: MIT
   license_file: LICENSE
+  license_family: MIT
+  doc_url: https://github.com/dedupeio/datetime-distance
+  dev_url: https://github.com/dedupeio/datetime-distance
 
 extra:
   recipe-maintainers:
