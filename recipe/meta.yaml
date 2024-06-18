@@ -7,8 +7,9 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/datetime-distance-{{ version }}.tar.gz
-  sha256: 7177a54a3555d4737626786f70a062e509f7c0014ba63fc26cd28263b8c64d68
+  # switch to the archive tarball for tests
+  url: https://github.com/dedupeio/datetime-distance/archive/refs/tags/v{{ version }}/.tar.gz
+  sha256: 125de8c1b51501c4df0c1911529681276ac12f0c4bf0fc405c1ad3c299233f88
 
 build:
   skip: True  # [py<36]
@@ -27,12 +28,16 @@ requirements:
     - python-dateutil >=2.6.0
 
 test:
+  source_files:
+    - tests
   imports:
     - datetime_distance
-  commands:
-    - pip check
   requires:
     - pip
+    - pytest
+  commands:
+    - pip check
+    - pytest -v tests
 
 about:
   home: https://github.com/dedupeio/datetime-distance
